@@ -10,35 +10,41 @@ Personal [Agent Skills](https://skills.sh/) collection.
 
 Creates a new Git worktree and branch using the `<keyword>-<description>` naming convention. It validates branch names, keeps worktrees under `.worktrees/`, optionally copies paths listed in `.worktreeinclude`, and includes an optional Claude Code `PreToolUse` hook.
 
+### `kill-port-process`
+
+Force-kills whatever process is listening on a given TCP port — the two-command recovery from `EADDRINUSE`. Looks up PIDs via `lsof -ti:<port>` (with an `ss` fallback on minimal Linux), confirms before privileged actions, and verifies the port is free afterwards. macOS and Linux only.
+
 ## Install
 
-Install the skill interactively:
+Install a single skill interactively:
 
 ```bash
 npx skills add xuxzh/skills --skill creating-worktrees
+npx skills add xuxzh/skills --skill kill-port-process
 ```
 
-Install it globally for a specific agent:
+Install a skill globally for a specific agent:
 
 ```bash
 # Pi
 npx skills add xuxzh/skills --skill creating-worktrees -g -a pi -y
+npx skills add xuxzh/skills --skill kill-port-process   -g -a pi -y
 
 # Claude Code
 npx skills add xuxzh/skills --skill creating-worktrees -g -a claude-code -y
+npx skills add xuxzh/skills --skill kill-port-process   -g -a claude-code -y
 ```
 
-After installation, ask your agent to create a worktree, for example:
+After installation, ask your agent:
 
-```text
-Create a worktree for feat-user-auth.
-```
+- `Create a worktree for feat-user-auth.` — uses `creating-worktrees`.
+- `Free port 5183 — something is in the way.` — uses `kill-port-process`.
 
-See [`skills/creating-worktrees/SKILL.md`](skills/creating-worktrees/SKILL.md) for the full behavior and [`references/install-hook.md`](skills/creating-worktrees/references/install-hook.md) for the optional Claude Code hook.
+See [`skills/creating-worktrees/SKILL.md`](skills/creating-worktrees/SKILL.md) and [`skills/kill-port-process/SKILL.md`](skills/kill-port-process/SKILL.md) for full behavior. The optional Claude Code `PreToolUse` hook for `creating-worktrees` is documented in [`skills/creating-worktrees/references/install-hook.md`](skills/creating-worktrees/references/install-hook.md).
 
 ## Development
 
-Run the skill's smoke test without creating a worktree:
+Run the `creating-worktrees` smoke test without creating a worktree:
 
 ```bash
 bash skills/creating-worktrees/scripts/smoke-test.sh
