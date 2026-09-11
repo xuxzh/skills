@@ -201,7 +201,7 @@ else
     fi
 
     mkdir -p "$(dirname "$dst")"
-    if cp "$src" "$dst" 2>/dev/null; then
+    if cp -RP "$src" "$dst" 2>/dev/null; then
       copied=$((copied + 1))
     else
       warn "copy failed for '$f'"
